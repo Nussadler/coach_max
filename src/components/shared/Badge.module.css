@@ -1,0 +1,27 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: white;
+}
+
+.intervals {
+    background-color: var(--color-type-intervals);
+}
+
+.easy {
+    background-color: var(--color-type-easy);
+}
+
+.long {
+    background-color: var(--color-type-long);
+}
+
+.strength {
+    background-color: var(--color-type-strength);
+}

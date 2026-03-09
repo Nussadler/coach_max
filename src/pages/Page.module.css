@@ -1,0 +1,59 @@
+.pageContainer {
+    min-height: 100vh;
+    background-color: var(--color-bg);
+}
+
+.header {
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.appTitle {
+    font-size: 1.25rem;
+    letter-spacing: -0.02em;
+}
+
+.userAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.stickyWeek {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: var(--color-surface);
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.05);
+}
+
+.mainContent {
+    padding: var(--spacing-md);
+}
+
+.sectionHeading {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.loadingPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    color: var(--color-text-secondary);
+}

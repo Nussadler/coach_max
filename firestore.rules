@@ -1,0 +1,32 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can read their own profile
+    // Coaches can read profiles of athletes assigned to them
+    match /users/{userId} {
+      allow read: if request.auth != null && (
+        request.auth.uid == userId || 
+        resource.data.coachId == request.auth.uid
+      );
+      allow write: if false; 
+    }
+    
+    // Workouts:
+    // - Athletes can read workouts where athleteId == auth.uid
+    // - Coaches can read/write workouts where coachId == auth.uid
+    match /workouts/{workoutId} {
+      allow read: if request.auth != null && (
+        resource.data.athleteId == request.auth.uid || 
+        get(/databases/$(database)/documents/users/(resource.data.athleteId)).data.coachId == request.auth.uid
+      );
+      // Coaches can create/delete
+      // Athletes can update (for logging) but only if they own it
+      allow create, delete: if request.auth != null && isCoach();
+      allow update: if request.auth != null && (
+        isCoach() || 
+        resource.data.athleteId == request.auth.uid
+      );
+    }
+  }
+}

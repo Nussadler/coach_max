@@ -1,0 +1,96 @@
+.container {
+    width: 100%;
+    overflow-x: auto;
+    padding: var(--spacing-md) 0;
+    /* Hide scrollbar for cleaner look */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+
+    scroll-snap-type: x mandatory;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.strip {
+    display: flex;
+    /* gap removed, handled by padding inside week or just sizing */
+}
+
+.week {
+    display: flex;
+    justify-content: space-around;
+    /* Distribute days evenly */
+    min-width: 100%;
+    /* take full width of container */
+    scroll-snap-align: center;
+    /* snap this element to center/start */
+    padding: 0 var(--spacing-sm);
+}
+
+.day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* min-width removed to allow flex grow/shrink or fixed % */
+    width: 13%;
+    /* roughly 100/7 */
+    height: 70px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: 1px solid transparent;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.day:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.selected {
+    background-color: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.selected:hover {
+    background-color: var(--color-primary);
+}
+
+.today {
+    /* Optional special styling for today */
+    font-weight: bold;
+}
+
+.dayName {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-bottom: 2px;
+}
+
+.selected .dayName {
+    opacity: 0.9;
+}
+
+.dayNum {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    position: absolute;
+    bottom: 8px;
+}
+
+.selected .dot {
+    background-color: white;
+}

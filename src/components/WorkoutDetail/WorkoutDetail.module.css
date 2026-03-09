@@ -1,0 +1,158 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+    padding-bottom: 80px;
+    /* Space for bottom nav or simple clear */
+}
+
+.backButton {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.backButton:hover {
+    color: var(--color-text-primary);
+}
+
+.header {
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.logButton {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.actionButton {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--color-text-primary);
+}
+
+.actionButton:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.logButton:hover {
+    opacity: 0.9;
+}
+
+.editButton,
+.deleteButton {
+    background: none;
+    border: 1px solid var(--color-border);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.editButton {
+    color: var(--color-text-primary);
+}
+
+.editButton:hover {
+    background-color: var(--color-bg-alt);
+    border-color: var(--color-text-tertiary);
+}
+
+.deleteButton {
+    color: #ef4444;
+    border-color: #fca5a5;
+    background-color: #fef2f2;
+}
+
+.deleteButton:hover {
+    background-color: #fee2e2;
+    border-color: #ef4444;
+}
+
+.titleSection {
+    margin-bottom: var(--spacing-xl);
+}
+
+.topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.title {
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.description {
+    display: flex;
+    gap: var(--spacing-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    background-color: var(--color-surface);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+.descIcon {
+    margin-top: 4px;
+    flex-shrink: 0;
+}
+
+.description p {
+    margin: 0;
+}
+
+.stepsSection {
+    margin-top: var(--spacing-lg);
+}
+
+.sectionTitle {
+    font-size: 1.2rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}

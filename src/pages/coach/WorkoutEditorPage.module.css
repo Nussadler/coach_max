@@ -1,0 +1,249 @@
+.container {
+    padding: var(--spacing-md);
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: 80px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.pageTitle {
+    font-size: 1.25rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.cancelButton {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.saveButton {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.saveButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.field input,
+.field select,
+.field textarea {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    background: var(--color-surface);
+    font-family: inherit;
+}
+
+.row {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.row .field {
+    flex: 1;
+}
+
+.stepsConfig {
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+}
+
+.stepsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.stepsHeader h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.addStepBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.stepList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.stepItem {
+    display: flex;
+    gap: var(--spacing-sm);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    align-items: flex-start;
+}
+
+.stepControls {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stepControls button {
+    background: none;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+}
+
+.stepControls button:disabled {
+    opacity: 0.3;
+}
+
+.stepContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stepRow {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    /* Allow wrapping */
+}
+
+.stepRow input,
+.stepRow select {
+    padding: 6px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    flex: 1 1 120px;
+    /* Grow, shrink, min-width */
+}
+
+.stepTitleInput {
+    flex: 2 1 180px;
+    /* Give title more space */
+    font-weight: 500;
+}
+
+.stepTypeSelect {
+    flex: 1 1 100px;
+}
+
+.removeStepBtn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.5;
+}
+
+.removeStepBtn:hover {
+    opacity: 1;
+}
+
+/* Repeat Block Editor Styles */
+.repeatItem {
+    background-color: var(--color-bg-alt);
+    /* Light background for contrast */
+    border: 1px solid var(--color-border);
+}
+
+.repeatContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.repeatsInput {
+    width: 60px !important;
+    text-align: center;
+}
+
+.repeatLabel {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    align-self: center;
+}
+
+.subStepsContainer {
+    margin-top: var(--spacing-sm);
+    margin-left: var(--spacing-md);
+    padding-left: var(--spacing-md);
+    border-left: 2px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.addSubStepBtn {
+    align-self: stretch;
+    /* Full width match */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: white;
+    border: 1px dashed var(--color-border);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.addSubStepBtn:hover {
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
