@@ -28,10 +28,12 @@ export const CoachAthletePlanPage: React.FC = () => {
                 setAthlete(profile);
 
                 // 2. Load Workouts
-                const startDate = new Date(selectedDate);
-                startDate.setDate(startDate.getDate() - 7);
-                const endDate = new Date(selectedDate);
-                endDate.setDate(endDate.getDate() + 7);
+                const today = new Date();
+                const startDate = new Date(today);
+                startDate.setDate(today.getDate() - 14); // -2 weeks
+
+                const endDate = new Date(today);
+                endDate.setDate(today.getDate() + 42);   // +6 weeks
 
                 const allWorkouts = await WorkoutService.getWorkoutsForWeek(
                     athleteId,
@@ -46,7 +48,8 @@ export const CoachAthletePlanPage: React.FC = () => {
             }
         };
         loadData();
-    }, [athleteId, selectedDate]);
+        // Remove selectedDate to prevent refetching
+    }, [athleteId]);
 
     const dailyWorkouts = useMemo(() => {
         return workouts.filter(w => w.date === selectedDate);
