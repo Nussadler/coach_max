@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { WeekStrip } from '../../components/WeekStrip/WeekStrip';
 import { WorkoutList } from '../../components/WorkoutList/WorkoutList';
+import { Header } from '../../components/Header/Header';
 import { WorkoutService } from '../../services/workoutService';
 import { UserService } from '../../services/userService';
 import type { Workout, UserProfile } from '../../types';
@@ -69,15 +70,10 @@ export const CoachAthletePlanPage: React.FC = () => {
 
     return (
         <div className={styles.pageContainer}>
-            <header className={styles.header}>
-                <button onClick={handleBack} className={coachStyles.backButton}>← Back</button>
-                <h1 className={styles.appTitle}>
-                    {athlete?.displayName || 'Athlete'}
-                </h1>
-                <div className={styles.userAvatar}>
-                    {athlete?.displayName?.[0] || 'A'}
-                </div>
-            </header>
+            <Header
+                title={athlete?.displayName || 'Athlete'}
+                leftAction={<button onClick={handleBack} className={coachStyles.backButton}>← Back</button>}
+            />
 
             <div className={styles.stickyWeek}>
                 <WeekStrip

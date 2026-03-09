@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth'; // Import signOut
 import type { User } from 'firebase/auth';
 import { auth, db } from '../app/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -8,12 +8,14 @@ interface AuthContextType {
     user: User | null;
     loading: boolean;
     userRole: 'athlete' | 'coach' | null;
+    logout: () => Promise<void>; // Add logout
 }
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
     loading: true,
-    userRole: null
+    userRole: null,
+    logout: async () => { } // Default empty function
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -54,8 +56,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return unsubscribe;
     }, []);
 
+    const logout = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error("Error signing out", error);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, userRole }}>
+        <AuthContext.Provider value={{ user, loading, userRole, logout }}>
             {!loading && children}
         </AuthContext.Provider>
     );

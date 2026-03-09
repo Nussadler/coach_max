@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { WeekStrip } from '../components/WeekStrip/WeekStrip';
 import { WorkoutList } from '../components/WorkoutList/WorkoutList';
+import { Header } from '../components/Header/Header';
 import { WorkoutService } from '../services/workoutService';
 import type { Workout } from '../types';
 import styles from './Page.module.css';
@@ -67,10 +68,7 @@ export const PlanPage: React.FC = () => {
 
     return (
         <div className={styles.pageContainer}>
-            <header className={styles.header}>
-                <h1 className={styles.appTitle}>Coach Max</h1>
-                <div className={styles.userAvatar}>MK</div>
-            </header>
+            <Header />
 
             <div className={styles.stickyWeek}>
                 <WeekStrip

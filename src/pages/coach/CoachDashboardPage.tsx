@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { UserService } from '../../services/userService';
+import { Header } from '../../components/Header/Header';
 import type { UserProfile } from '../../types';
 import styles from './CoachDashboardPage.module.css';
 
@@ -38,10 +39,7 @@ export const CoachDashboardPage: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <header className={styles.header}>
-                <h1 className={styles.title}>Coach Dashboard</h1>
-                <div className={styles.coachName}>{user?.email}</div>
-            </header>
+            <Header title="Coach Dashboard" />
 
             <main className={styles.main}>
                 <h2 className={styles.sectionTitle}>My Athletes</h2>
