@@ -58,12 +58,6 @@ export const StepEditorItem: React.FC<StepEditorItemProps> = ({
         onUpdate(step.id, { subSteps: newSubSteps });
     };
 
-    const handleAddSubStepInternal = (parentId: string) => {
-        // Pass strictly to parent handler if it matches this step's ID, otherwise distinct logic might be needed
-        // But here we are the parent of the sub-steps.
-        onAddSubStep(parentId);
-    };
-
     // We need a way to add a sub-step to THIS step specifically
     const addStepToThisGroup = () => {
         onAddSubStep(step.id);

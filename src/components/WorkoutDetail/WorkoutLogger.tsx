@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import type { Workout, WorkoutStep } from '../../types';
 import styles from './WorkoutLogger.module.css';
-import { Trash2, Save, X, Plus, RefreshCcw } from 'lucide-react';
+import { Trash2, Save, X, RefreshCcw } from 'lucide-react';
 
 interface WorkoutLoggerProps {
     workout: Workout;
@@ -57,7 +57,7 @@ export const WorkoutLogger: React.FC<WorkoutLoggerProps> = ({ workout, onSave, o
     };
 
     // Recursive render helper
-    const renderStep = (step: WorkoutStep, index: number, siblings: WorkoutStep[]) => {
+    const renderStep = (step: WorkoutStep) => {
         if (step.type === 'repeat' && step.subSteps) {
             return (
                 <div key={step.id} className={styles.repeatBlock}>
@@ -71,7 +71,7 @@ export const WorkoutLogger: React.FC<WorkoutLoggerProps> = ({ workout, onSave, o
                         </button>
                     </div>
                     <div className={styles.subSteps}>
-                        {step.subSteps.map((sub, i) => renderStep(sub, i, step.subSteps!))}
+                        {step.subSteps.map((sub) => renderStep(sub))}
                     </div>
                 </div>
             );
@@ -141,7 +141,7 @@ export const WorkoutLogger: React.FC<WorkoutLoggerProps> = ({ workout, onSave, o
                     Enter your actual stats. You can remove steps if you skipped them.
                 </p>
                 <div className={styles.stepsList}>
-                    {steps.map((s, i) => renderStep(s, i, steps))}
+                    {steps.map((s) => renderStep(s))}
                 </div>
             </div>
         </div>
