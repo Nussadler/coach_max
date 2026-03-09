@@ -26,11 +26,14 @@ export const PlanPage: React.FC = () => {
 
             setLoading(true);
             try {
-                // Fetch workouts for a 2-week range around selected date
-                const startDate = new Date(selectedDate);
-                startDate.setDate(startDate.getDate() - 7);
-                const endDate = new Date(selectedDate);
-                endDate.setDate(endDate.getDate() + 7);
+                // Fetch workouts for the entire WeekStrip range (2 weeks past, 6 weeks future)
+                // We base this on 'today' rather than 'selectedDate' so it caches properly
+                const today = new Date();
+                const startDate = new Date(today);
+                startDate.setDate(today.getDate() - 14); // -2 weeks
+
+                const endDate = new Date(today);
+                endDate.setDate(today.getDate() + 42);   // +6 weeks
 
                 const allWorkouts = await WorkoutService.getWorkoutsForWeek(
                     user.uid,
@@ -45,7 +48,8 @@ export const PlanPage: React.FC = () => {
             }
         };
         loadWorkouts();
-    }, [selectedDate, user]);
+        // Remove selectedDate from dependencies so we only fetch once on mount/auth
+    }, [user]);
 
     // Filter workouts for the selected date
     const dailyWorkouts = useMemo(() => {
