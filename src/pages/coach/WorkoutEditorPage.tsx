@@ -112,7 +112,7 @@ export const WorkoutEditorPage: React.FC = () => {
                     athleteId
                 } as any); // Cast because createWorkout expects Omit<Workout, 'id'> and some fields might be missing in Partial
             }
-            navigate(`/coach/athlete/${athleteId}`);
+            navigate(`/coach/athlete/${athleteId}?date=${date}`);
         } catch (error) {
             console.error("Failed to saving workout", error);
             alert("Failed to save workout");

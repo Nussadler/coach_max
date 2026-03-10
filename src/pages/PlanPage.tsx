@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { WeekStrip } from '../components/WeekStrip/WeekStrip';
 import { WorkoutList } from '../components/WorkoutList/WorkoutList';
@@ -10,14 +10,22 @@ import styles from './Page.module.css';
 
 export const PlanPage: React.FC = () => {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const { user } = useAuth(); // Now using user from hook
-    const [selectedDate, setSelectedDate] = useState<string>(() => {
+
+    const initialDate = searchParams.get('date') || (() => {
         const d = new Date();
         const year = d.getFullYear();
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
-    });
+    })();
+    const [selectedDate, setSelectedDate] = useState<string>(initialDate);
+
+    // Sync selectedDate to URL
+    useEffect(() => {
+        setSearchParams({ date: selectedDate }, { replace: true });
+    }, [selectedDate, setSearchParams]);
     const [workouts, setWorkouts] = useState<Workout[]>([]);
     const [loading, setLoading] = useState(true);
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { WeekStrip } from '../../components/WeekStrip/WeekStrip';
 import { WorkoutList } from '../../components/WorkoutList/WorkoutList';
 import { Header } from '../../components/Header/Header';
@@ -13,7 +13,15 @@ import coachStyles from './CoachAthletePlanPage.module.css';
 export const CoachAthletePlanPage: React.FC = () => {
     const { athleteId } = useParams<{ athleteId: string }>();
     const navigate = useNavigate();
-    const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const initialDate = searchParams.get('date') || new Date().toISOString().split('T')[0];
+    const [selectedDate, setSelectedDate] = useState<string>(initialDate);
+
+    // Sync selectedDate to URL
+    useEffect(() => {
+        setSearchParams({ date: selectedDate }, { replace: true });
+    }, [selectedDate, setSearchParams]);
     const [workouts, setWorkouts] = useState<Workout[]>([]);
     const [athlete, setAthlete] = useState<UserProfile | undefined>();
     const [loading, setLoading] = useState(true);
