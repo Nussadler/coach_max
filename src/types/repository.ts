@@ -11,4 +11,5 @@ export interface WorkoutRepository {
 export interface UserRepository {
     getAthletes(coachId: string): Promise<UserProfile[]>;
     getUserProfile(uid: string): Promise<UserProfile | undefined>;
+    updateUserProfile(uid: string, data: Partial<UserProfile>): Promise<void>;
 }

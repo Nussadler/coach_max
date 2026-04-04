@@ -37,4 +37,35 @@ export interface UserProfile {
     displayName: string;
     role: 'athlete' | 'coach';
     coachId?: string;
+    restingHr?: number;
+    maxHr?: number;
+}
+
+export type ActivityCategory = 'Threshold' | 'VO2Max' | 'Long Run' | 'Easy Run';
+
+export interface Lap {
+    index: number;
+    distance: number;    // km
+    duration: number;    // seconds
+    pace: number;        // min/km
+    avgHr: number;       // bpm
+    maxHr: number;       // bpm
+    avgCadence?: number; // spm
+    intensity?: string;  // e.g. "warmup", "active", "cooldown"
+}
+
+export interface Activity {
+    id: string;
+    athleteId: string;
+    date: string; // ISO YYYY-MM-DD
+    distance: number; // in km
+    pace: number; // in min/km
+    avgHr: number;
+    maxHr: number;
+    category: ActivityCategory;
+    duration: number; // in seconds
+    name: string;
+    uploadTimestamp: string; // ISO
+    originalFileName: string;
+    laps?: Lap[];
 }

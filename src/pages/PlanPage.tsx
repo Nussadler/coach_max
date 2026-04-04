@@ -5,7 +5,13 @@ import { WeekStrip } from '../components/WeekStrip/WeekStrip';
 import { WorkoutList } from '../components/WorkoutList/WorkoutList';
 import { Header } from '../components/Header/Header';
 import { WorkoutService } from '../services/workoutService';
-import type { Workout } from '../types';
+import { ActivityService } from '../services/activityService';
+import { AthleteTabs } from '../components/AthleteTabs/AthleteTabs';
+import type { TabType } from '../components/AthleteTabs/AthleteTabs';
+import { ActivityUpload } from '../components/ActivityUpload/ActivityUpload';
+import { ActivityList } from '../components/ActivityList/ActivityList';
+import { AthleteProfileSettings } from '../components/AthleteProfileSettings/AthleteProfileSettings';
+import type { Workout, Activity } from '../types';
 import styles from './Page.module.css';
 
 export const PlanPage: React.FC = () => {
@@ -27,6 +33,8 @@ export const PlanPage: React.FC = () => {
         setSearchParams({ date: selectedDate }, { replace: true });
     }, [selectedDate, setSearchParams]);
     const [workouts, setWorkouts] = useState<Workout[]>([]);
+    const [activities, setActivities] = useState<Activity[]>([]);
+    const [activeTab, setActiveTab] = useState<TabType>('plan');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -50,6 +58,10 @@ export const PlanPage: React.FC = () => {
                     endDate.toISOString().split('T')[0]
                 );
                 setWorkouts(allWorkouts);
+
+                // Load Activities
+                const allActivities = await ActivityService.getActivitiesForAthlete(user.uid);
+                setActivities(allActivities);
             } catch (error) {
                 console.error("Failed to load workouts", error);
             } finally {
@@ -78,24 +90,55 @@ export const PlanPage: React.FC = () => {
         <div className={styles.pageContainer}>
             <Header />
 
-            <div className={styles.stickyWeek}>
-                <WeekStrip
-                    selectedDate={selectedDate}
-                    onSelectDate={setSelectedDate}
-                    datesWithWorkouts={datesWithWorkouts}
-                />
-            </div>
+            {activeTab === 'plan' && (
+                <div className={styles.stickyWeek}>
+                    <WeekStrip
+                        selectedDate={selectedDate}
+                        onSelectDate={setSelectedDate}
+                        datesWithWorkouts={datesWithWorkouts}
+                    />
+                </div>
+            )}
 
             <main className={styles.mainContent}>
-                <h2 className={styles.sectionHeading}>
-                    {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-                </h2>
-                <WorkoutList
-                    workouts={dailyWorkouts}
-                    onSelectWorkout={handleSelectWorkout}
-                    loading={loading}
-                />
+                {activeTab === 'plan' && (
+                    <>
+                        <h2 className={styles.sectionHeading}>
+                            {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                        </h2>
+                        <WorkoutList
+                            workouts={dailyWorkouts}
+                            onSelectWorkout={handleSelectWorkout}
+                            loading={loading}
+                        />
+                    </>
+                )}
+                
+                {activeTab === 'activities' && (
+                    <>
+                        <ActivityUpload
+                            athleteId={user?.uid || ''}
+                            onUploadSuccess={(newActivity) => {
+                                setActivities(prev => [newActivity, ...prev].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
+                            }}
+                        />
+                        {loading ? (
+                            <p style={{ textAlign: 'center', color: '#a1a1aa' }}>Lade Aktivitäten...</p>
+                        ) : (
+                            <ActivityList
+                                activities={activities}
+                                onDelete={(id) => setActivities(prev => prev.filter(a => a.id !== id))}
+                            />
+                        )}
+                    </>
+                )}
+                
+                {activeTab === 'profile' && user?.uid && (
+                    <AthleteProfileSettings athleteId={user.uid} />
+                )}
             </main>
+
+            <AthleteTabs activeTab={activeTab} onChange={setActiveTab} />
         </div>
     );
 };

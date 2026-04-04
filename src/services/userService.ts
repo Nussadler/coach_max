@@ -10,5 +10,9 @@ export const UserService = {
 
     getUserProfile: async (uid: string): Promise<UserProfile | undefined> => {
         return repository.getUserProfile(uid);
+    },
+
+    updateUserProfile: async (uid: string, data: Partial<UserProfile>): Promise<void> => {
+        return repository.updateUserProfile(uid, data);
     }
 };

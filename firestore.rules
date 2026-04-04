@@ -2,6 +2,10 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isCoach() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'coach';
+    }
+
     // Users can read their own profile
     // Coaches can read profiles of athletes assigned to them
     match /users/{userId} {
@@ -9,7 +13,9 @@ service cloud.firestore {
         request.auth.uid == userId || 
         resource.data.coachId == request.auth.uid
       );
-      allow write: if false; 
+      // Users can update their own profile (e.g. HR settings)
+      allow update: if request.auth != null && request.auth.uid == userId;
+      allow create, delete: if false; 
     }
     
     // Workouts:
@@ -18,7 +24,8 @@ service cloud.firestore {
     match /workouts/{workoutId} {
       allow read: if request.auth != null && (
         resource.data.athleteId == request.auth.uid || 
-        get(/databases/$(database)/documents/users/(resource.data.athleteId)).data.coachId == request.auth.uid
+        resource.data.coachId == request.auth.uid ||
+        get(/databases/$(database)/documents/users/$(resource.data.athleteId)).data.coachId == request.auth.uid
       );
       // Coaches can create/delete
       // Athletes can update (for logging) but only if they own it
@@ -26,6 +33,23 @@ service cloud.firestore {
       allow update: if request.auth != null && (
         isCoach() || 
         resource.data.athleteId == request.auth.uid
+      );
+    }
+    // Activities:
+    // - Athletes can log activities (create/update) for themselves
+    // - Coaches can read/write activities for their athletes
+    match /activities/{activityId} {
+      allow read: if request.auth != null && (
+        resource.data.athleteId == request.auth.uid || 
+        get(/databases/$(database)/documents/users/$(resource.data.athleteId)).data.coachId == request.auth.uid
+      );
+      allow create, update: if request.auth != null && (
+        request.resource.data.athleteId == request.auth.uid || 
+        get(/databases/$(database)/documents/users/$(request.resource.data.athleteId)).data.coachId == request.auth.uid
+      );
+      allow delete: if request.auth != null && (
+        resource.data.athleteId == request.auth.uid || 
+        get(/databases/$(database)/documents/users/$(resource.data.athleteId)).data.coachId == request.auth.uid
       );
     }
   }

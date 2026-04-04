@@ -41,5 +41,16 @@ export const FirestoreUserRepository: UserRepository = {
             console.error("Error fetching user profile:", error);
             return undefined;
         }
+    },
+
+    updateUserProfile: async (uid: string, data: Partial<UserProfile>): Promise<void> => {
+        const { updateDoc } = await import('firebase/firestore');
+        try {
+            const docRef = doc(db, 'users', uid);
+            await updateDoc(docRef, data);
+        } catch (error) {
+            console.error("Error updating user profile:", error);
+            throw error;
+        }
     }
 };

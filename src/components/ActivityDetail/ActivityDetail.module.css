@@ -1,0 +1,289 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.panel {
+    background: var(--bg-card, #1a1a2e);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+
+.handle {
+    display: flex;
+    justify-content: center;
+    padding: 12px 0 4px;
+}
+
+.handle::after {
+    content: '';
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--text-secondary, #555);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 20px 16px;
+    border-bottom: 1px solid var(--border-color, #2a2a3e);
+}
+
+.headerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.title {
+    margin: 0;
+    font-size: 18px;
+    color: var(--text-primary, #fff);
+    font-weight: 700;
+}
+
+.date {
+    font-size: 13px;
+    color: var(--text-secondary, #a1a1aa);
+}
+
+.deleteButton {
+    background: transparent;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.deleteButton:hover {
+    background: #ef4444;
+    color: white;
+}
+
+.deleteButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border-color, #2a2a3e);
+    margin: 0;
+}
+
+.summaryItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 8px;
+    background: var(--bg-card, #1a1a2e);
+}
+
+.summaryLabel {
+    font-size: 11px;
+    color: var(--text-secondary, #a1a1aa);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.summaryValue {
+    font-size: 16px;
+    color: var(--text-primary, #fff);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.lapsSection {
+    padding: 16px 20px;
+}
+
+.lapsTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary, #fff);
+    margin: 0 0 12px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.lapsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+}
+
+.lapsTable th {
+    font-size: 11px;
+    color: var(--text-secondary, #a1a1aa);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    padding: 8px 6px;
+    text-align: right;
+    border-bottom: 1px solid var(--border-color, #2a2a3e);
+    font-weight: 500;
+}
+
+.lapsTable th:first-child {
+    text-align: center;
+    width: 36px;
+}
+
+.lapsTable td {
+    font-size: 14px;
+    color: var(--text-primary, #fff);
+    padding: 10px 6px;
+    text-align: right;
+    border-bottom: 1px solid var(--border-color, #1a1a2e);
+}
+
+.lapsTable td:first-child {
+    text-align: center;
+    color: var(--text-secondary, #a1a1aa);
+    font-weight: 500;
+}
+
+.lapsTable tr:last-child td {
+    border-bottom: none;
+}
+
+.lapsTable tbody tr {
+    transition: background 0.15s ease;
+}
+
+.lapsTable tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.intensityBadge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+}
+
+.intensityWarmup {
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+}
+
+.intensityActive {
+    background: rgba(234, 179, 8, 0.15);
+    color: #facc15;
+}
+
+.intensityCooldown {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+}
+
+.intensityRest {
+    background: rgba(161, 161, 170, 0.15);
+    color: #a1a1aa;
+}
+
+.noLaps {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-secondary, #a1a1aa);
+    font-size: 14px;
+}
+
+.confirmOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.confirmDialog {
+    background: var(--bg-card, #1a1a2e);
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 340px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid var(--border-color, #2a2a3e);
+}
+
+.confirmDialog p {
+    color: var(--text-primary, #fff);
+    margin: 0 0 20px;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.confirmActions {
+    display: flex;
+    gap: 12px;
+}
+
+.confirmCancel {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #2a2a3e);
+    background: transparent;
+    color: var(--text-primary, #fff);
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.confirmDelete {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background: #ef4444;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.confirmDelete:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
