@@ -199,13 +199,33 @@ export const StepEditorItem: React.FC<StepEditorItemProps> = ({
                     <input
                         value={step.duration || ''}
                         onChange={e => onUpdate(step.id, { duration: e.target.value })}
-                        placeholder="Duration (e.g. 10min)"
+                        placeholder="Duration (e.g. 10min, 5km)"
                     />
-                    <input
-                        value={step.pace || ''}
-                        onChange={e => onUpdate(step.id, { pace: e.target.value })}
-                        placeholder="Pace Hint"
-                    />
+                    <div style={{ display: 'flex', gap: '4px', flex: 1 }}>
+                        <select 
+                            value={step.pace && /^Zone [1-5]$/.test(step.pace) ? step.pace : 'custom'}
+                            onChange={(e) => {
+                                if (e.target.value !== 'custom') {
+                                    onUpdate(step.id, { pace: e.target.value });
+                                }
+                            }}
+                            className={styles.stepTypeSelect}
+                            style={{ flex: 1, minWidth: '80px' }}
+                        >
+                            <option value="custom">Custom</option>
+                            <option value="Zone 1">Z1</option>
+                            <option value="Zone 2">Z2</option>
+                            <option value="Zone 3">Z3</option>
+                            <option value="Zone 4">Z4</option>
+                            <option value="Zone 5">Z5</option>
+                        </select>
+                        <input
+                            value={step.pace || ''}
+                            onChange={e => onUpdate(step.id, { pace: e.target.value })}
+                            placeholder="Pace / HR"
+                            style={{ flex: 2 }}
+                        />
+                    </div>
                 </div>
             </div>
             <button type="button" onClick={() => onRemove(step.id)} className={styles.removeStepBtn}>

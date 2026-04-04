@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { WorkoutDetailComponent } from '../components/WorkoutDetail/WorkoutDetail';
 import { WorkoutService } from '../services/workoutService';
-import type { Workout, WorkoutStep } from '../types';
+import { UserService } from '../services/userService';
+import type { Workout, UserProfile } from '../types';
 import { useAuth } from '../context/AuthContext';
 import styles from './Page.module.css';
 
@@ -11,6 +12,7 @@ export const WorkoutPage: React.FC = () => {
     const navigate = useNavigate();
     const { userRole } = useAuth();
     const [workout, setWorkout] = useState<Workout | undefined>(undefined);
+    const [athleteProfile, setAthleteProfile] = useState<UserProfile | undefined>();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,6 +22,10 @@ export const WorkoutPage: React.FC = () => {
             try {
                 const data = await WorkoutService.getWorkoutById(id);
                 setWorkout(data);
+                if (data && data.athleteId) {
+                    const profile = await UserService.getUserProfile(data.athleteId);
+                    if (profile) setAthleteProfile(profile);
+                }
             } catch (error) {
                 console.error("Failed to load workout", error);
             } finally {
@@ -45,22 +51,6 @@ export const WorkoutPage: React.FC = () => {
     const handleEdit = () => {
         if (!workout) return;
         navigate(`/coach/athlete/${workout.athleteId}/workout/${workout.id}/edit`);
-    };
-
-    const handleLogWorkout = async (performedSteps: WorkoutStep[]) => {
-        if (!workout || !id) return;
-        try {
-            await WorkoutService.updateWorkout(id, {
-                performedSteps,
-                completed: true
-            });
-            // Reload local state to show completed status
-            const updated = await WorkoutService.getWorkoutById(id);
-            if (updated) setWorkout(updated);
-        } catch (error) {
-            console.error("Failed to log workout", error);
-            alert("Failed to save log");
-        }
     };
 
     const handleCopy = async () => {
@@ -116,10 +106,9 @@ export const WorkoutPage: React.FC = () => {
         <div className={styles.pageContainer}>
             <WorkoutDetailComponent
                 workout={workout}
+                athleteProfile={athleteProfile}
                 onEdit={isCoach ? handleEdit : undefined}
                 onDelete={isCoach ? handleDelete : undefined}
-                onLogWorkout={!isCoach ? handleLogWorkout : undefined}
-                canLog={!isCoach}
                 onCopy={isCoach ? handleCopy : undefined}
                 onMove={isCoach ? handleMove : undefined}
             />

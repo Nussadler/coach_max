@@ -1,46 +1,29 @@
-import React, { useState } from 'react';
-import type { Workout, WorkoutStep } from '../../types';
+import React from 'react';
+import type { Workout, UserProfile } from '../../types';
 import { StepList } from './StepList';
 import { Badge } from '../shared/Badge';
-import { ChevronLeft, Calendar, FileText, PlayCircle } from 'lucide-react';
+import { ChevronLeft, Calendar, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import styles from './WorkoutDetail.module.css';
-import { WorkoutLogger } from './WorkoutLogger';
 
 interface WorkoutDetailComponentProps {
     workout: Workout;
+    athleteProfile?: UserProfile;
     onEdit?: () => void;
     onDelete?: () => void;
-    onLogWorkout?: (performedSteps: WorkoutStep[]) => Promise<void>;
-    canLog?: boolean;
     onCopy?: () => void;
     onMove?: () => void;
 }
 
 export const WorkoutDetailComponent: React.FC<WorkoutDetailComponentProps> = ({
     workout,
+    athleteProfile,
     onEdit,
     onDelete,
-    onLogWorkout,
-    canLog = false,
     onCopy,
     onMove
 }) => {
     const navigate = useNavigate();
-    const [isLogging, setIsLogging] = useState(false);
-
-    if (isLogging && onLogWorkout) {
-        return (
-            <WorkoutLogger
-                workout={workout}
-                onSave={async (steps) => {
-                    await onLogWorkout(steps);
-                    setIsLogging(false);
-                }}
-                onCancel={() => setIsLogging(false)}
-            />
-        );
-    }
 
     return (
         <div className={styles.container}>
@@ -51,11 +34,6 @@ export const WorkoutDetailComponent: React.FC<WorkoutDetailComponentProps> = ({
                     <span>Back</span>
                 </button>
                 <div className={styles.actions}>
-                    {canLog && !workout.completed && (
-                        <button onClick={() => setIsLogging(true)} className={styles.logButton}>
-                            <PlayCircle size={16} /> Log Workout
-                        </button>
-                    )}
                     {(onEdit || onDelete) && (
                         <>
                             {onCopy && <button onClick={onCopy} className={styles.actionButton}>Copy</button>}
@@ -88,7 +66,7 @@ export const WorkoutDetailComponent: React.FC<WorkoutDetailComponentProps> = ({
                 <h2 className={styles.sectionTitle}>
                     {workout.completed ? "Performed Workout" : "Structure"}
                 </h2>
-                <StepList steps={workout.performedSteps || workout.steps} />
+                <StepList steps={workout.performedSteps || workout.steps} athleteProfile={athleteProfile} />
             </div>
         </div>
     );

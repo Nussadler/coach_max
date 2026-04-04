@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Upload } from 'lucide-react';
+import { Upload, ExternalLink } from 'lucide-react';
 import { parseFitFile } from '../../utils/fitParser';
 import { ActivityService } from '../../services/activityService';
 import type { Activity } from '../../types';
@@ -87,6 +87,20 @@ export const ActivityUpload: React.FC<ActivityUploadProps> = ({ athleteId, onUpl
                 {loading ? 'Verarbeite FIT...' : '.fit Workout hochladen'}
             </button>
             {error && <div className={styles.error}>{error}</div>}
+
+            <a
+                href="https://connect.garmin.com/modern/activities"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.garminButton}
+            >
+                <ExternalLink size={16} />
+                Open Garmin Connect
+            </a>
+
+            <p className={styles.helperText}>
+                Du kannst deine Aktivitäten bei Garmin Connect (nur Website) öffnen, auf das Zahnrad-Symbol klicken und "Datei exportieren“ wählen, um die .fit-Datei für den Upload hier herunterzuladen.
+            </p>
         </div>
     );
 };
